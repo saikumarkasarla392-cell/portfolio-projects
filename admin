@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<style>
+body { font-family: Arial; padding:20px; }
+input,button { padding:10px; margin:5px; }
+
+.card {
+display:flex;
+justify-content:space-between;
+background:#f1f1f1;
+padding:10px;
+margin:10px 0;
+border-radius:8px;
+} </style>
+
+</head>
+
+<body>
+
+<h2>Admin Panel</h2>
+
+<input id="name" placeholder="Product Name">
+<input id="price" placeholder="Price">
+
+<button onclick="add()">Add Product</button>
+
+<div id="list"></div>
+
+<script>
+
+let products = [];
+
+function add(){
+let name = document.getElementById("name").value;
+let price = document.getElementById("price").value;
+
+if(!name || !price) return alert("Enter details");
+
+products.push({name,price});
+render();
+}
+
+function remove(i){
+products.splice(i,1);
+render();
+}
+
+function render(){
+document.getElementById("list").innerHTML =
+products.map((p,i)=>`
+<div class="card">
+${p.name} - ₹${p.price}
+<button onclick="remove(${i})">Delete</button>
+</div>`).join("");
+}
+
+</script>
+
+</body>
+</html>
