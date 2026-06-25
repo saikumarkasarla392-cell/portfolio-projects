@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<style>
+body { font-family: Arial; text-align:center; padding:40px; }
+select,button { padding:10px; margin:10px; }
+.result { margin-top:20px; padding:20px; background:#eee; }
+</style>
+</head>
+
+<body>
+
+<h2>AI Outfit Generator</h2>
+
+<select id="occasion">
+<option>Casual</option>
+<option>Office</option>
+<option>Party</option>
+</select>
+
+<select id="weather">
+<option>Hot</option>
+<option>Cold</option>
+</select>
+
+<select id="color">
+<option>Dark</option>
+<option>Light</option>
+</select>
+
+<button onclick="generate()">Generate Outfit</button>
+
+<div class="result" id="output"></div>
+
+<script>
+
+function generate(){
+let o = occasion.value;
+let w = weather.value;
+let c = color.value;
+
+let res = "";
+
+if(o=="Casual" && w=="Hot")
+res="Light T-shirt + Shorts ☀️";
+
+else if(o=="Office")
+res="Formal Shirt + Trousers 👔";
+
+else if(o=="Party")
+res="Jacket + Stylish Jeans 🔥";
+
+if(c=="Dark") res += " (Dark theme)";
+else res += " (Light theme)";
+
+output.innerText = res;
+}
+
+</script>
+
+</body>
+</html>
