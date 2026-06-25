@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UrbanWear Pro</title>
+
+<style>
+body { font-family: Arial; margin:0; background:#f5f5f5; }
+
+header {
+ display:flex; justify-content:space-between;
+ background:black; color:white; padding:15px;
+}
+
+input {
+ padding:8px; width:200px;
+}
+
+.products {
+ display:grid;
+ grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+ gap:20px; padding:20px;
+}
+
+.card {
+ background:white; padding:10px;
+ border-radius:10px;
+ box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+button {
+ width:100%; padding:8px;
+ background:black; color:white;
+ border:none; margin-top:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h2>UrbanWear</h2>
+<input placeholder="Search..." onkeyup="search(this.value)">
+<div onclick="checkout()">🛒 (<span id="count">0</span>)</div>
+</header>
+
+<div class="products" id="products"></div>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let products = [
+{name:"Black T-Shirt",price:499,img:"https://via.placeholder.com/200"},
+{name:"White Hoodie",price:999,img:"https://via.placeholder.com/200"},
+{name:"Denim Jacket",price:1499,img:"https://via.placeholder.com/200"},
+{name:"Casual Shirt",price:799,img:"https://via.placeholder.com/200"},
+{name:"Jeans",price:1299,img:"https://via.placeholder.com/200"},
+{name:"Cap",price:299,img:"https://via.placeholder.com/200"},
+{name:"Sneakers",price:1999,img:"https://via.placeholder.com/200"},
+{name:"Watch",price:2499,img:"https://via.placeholder.com/200"},
+{name:"Shorts",price:599,img:"https://via.placeholder.com/200"},
+{name:"Sweater",price:1099,img:"https://via.placeholder.com/200"}
+];
+
+function render(list){
+document.getElementById("products").innerHTML =
+list.map((p,i)=>`
+<div class="card">
+<img src="${p.img}" width="100%">
+<h3>${p.name}</h3>
+<p>₹${p.price}</p>
+<button onclick="add(${i})">Add to Cart</button>
+</div>`).join("");
+
+document.getElementById("count").innerText = cart.length;
+}
+
+function add(i){
+cart.push(products[i]);
+localStorage.setItem("cart", JSON.stringify(cart));
+render(products);
+}
+
+function search(q){
+let filtered = products.filter(p =>
+p.name.toLowerCase().includes(q.toLowerCase()));
+render(filtered);
+}
+
+function checkout(){
+let total = cart.reduce((sum,p)=>sum+p.price,0);
+alert("Total: ₹"+total);
+}
+
+render(products);
+
+</script>
+
+</body>
+</html>
